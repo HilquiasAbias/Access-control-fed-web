@@ -39,4 +39,11 @@ export class EnvironmentsService {
     };
     return this.httpClient.get<EnvironmentsDashboardDataModel>(this.api + '/frequenter', { headers });
   } 
+
+  public remoteAccess(request: any): Observable<any> {
+    const headers = {
+      Authorization: `Bearer ${this.token}`
+    };
+    return this.httpClient.post<EnvironmentsResponse>(this.api + "/remote-access", request, { headers });
+  }
 }
