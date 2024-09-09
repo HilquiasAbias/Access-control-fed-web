@@ -1,9 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { AddFrequenterModel, DayOptions, TimeOptions } from 'src/app/models/environments/add-frequenter.model';
 import { EnvironmentsFilter } from 'src/app/models/environments/environments.filter';
 import { EnvironmentsResponse } from 'src/app/models/environments/environments.response';
 import { EnvironmentsService } from 'src/app/services/environments.service';
 import { UsersService } from 'src/app/services/users.service';
+import { environment } from 'src/environments/environment';
 
 const FREQUENTER = 2, MANAGER = 3, TEMPORARY = 4;
 const PERMANENT = 1, DAY = 2, TIME = 3;
@@ -77,10 +80,14 @@ export class EnvironmentsComponent implements OnInit {
 
   filter: EnvironmentsFilter;
 
+
   constructor(
     private environmentService: EnvironmentsService,
     private userService: UsersService,
-  ) {}
+    public httpClient: HttpClient,
+    private messageService: MessageService
+  ) {
+  }
   
   async ngOnInit() {
     this.filter = new EnvironmentsFilter();
@@ -147,6 +154,7 @@ export class EnvironmentsComponent implements OnInit {
     this.selectedTimeAccess.push({
       dias: "Sem horários selecionados"
     })
+
   }
 
   requiredField(field: any): boolean {
@@ -166,9 +174,30 @@ export class EnvironmentsComponent implements OnInit {
   }
 
   async editEnvironment(id: string) {
-    this.selectedEnvironment = this.environments.data.find(environment => environment.id === id);
-    //
-    console.log(this.selectedEnvironment);
+    // this.selectedEnvironment = this.environments.data.find(environment => environment.id === id);
+    // //
+    // console.log(this.selectedEnvironment);
+
+    // 
+
+    return new Promise((resolve) => {
+      this.environmentService.remoteAccess({
+        environmentId: id,
+        esp8266Id: 6,
+        type: 'web'
+      }).subscribe({
+        next: (response: any) => {
+          console.log(response)
+          // toast de sucesso
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: "Solicitaç~ao realizada!", life: 3000 });
+          resolve(response);
+        },
+        error: (error) => {
+          console.log(error)
+          resolve(null);
+        }
+      })
+    });
   }
 
   get frequenter(): number {
