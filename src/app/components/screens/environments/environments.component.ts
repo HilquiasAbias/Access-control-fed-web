@@ -299,7 +299,7 @@ export class EnvironmentsComponent implements OnInit {
     let temp = this.timeOptions.horarioEntrada + ' - ' + this.timeOptions.horarioSaida
     this.timeOptions.dias.forEach((element, index) => {
       if (index == 0) {
-        temp += ' ' + this.selectDayString(element.day)
+        temp += ' | ' + this.selectDayString(element.day)
       } else {
         temp += ', ' + this.selectDayString(element.day)
       }
