@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.timerSubscription = timer(0, 5000).pipe(
             map(async () => {
                 this.usersDashboardData = await this.getUsersDashboardData();
-                this.devicesDashboardData = await this.getDevicesDashboardData();
+                // this.devicesDashboardData = await this.getDevicesDashboardData();
                 this.environmentsDashboardData = await this.getEnvironmentsDashboardData();
                 this.logs = await this.getAccessLogs();
             })

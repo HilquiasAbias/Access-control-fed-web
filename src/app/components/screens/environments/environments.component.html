@@ -5,7 +5,10 @@
         <ng-template pTemplate="left">
           <div class="my-2">
             <button pButton pRipple class="p-button-success mr-2 add-env-button" (click)="createEnvironment()">
-              <i class="pi pi-building">+ Adicionar</i>
+              <i class="pi pi-building"> Criar ambiente</i>
+              </button>
+              <button pButton pRipple class="p-button-success mr-2 add-env-button" (click)="addUser()">
+                <i class="pi pi-user"> Vincular usuário</i>
             </button>
           </div>
         </ng-template>
@@ -19,7 +22,8 @@
             <th>Nome</th>
             <th>Criado por</th>
             <th>Usuários</th>
-            <th>Ações</th>
+            <th>Editar</th>
+            <!-- <th>Vincular usuário</th> -->
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-environment>
@@ -28,18 +32,25 @@
             <td>{{environment.user_name}}</td>
             <td>{{usersCount[environment.id]}}</td>
             <td>
+              <button class="p-button p-button-warning action-btn" (click)="editEnvironment(environment.id)">
+                <i class="pi pi-pencil"></i>
+              </button>
+              </td>
+              <!-- <td>
+                              <button class="p-button p-button-success action-btn" (click)="addUser(environment.id)">
+                                <i class="pi pi-user-plus"></i>
+                              </button>
+                            </td> -->
+              <!-- <td>
               <div style="display: flex; align-items: center; ">
-                
                 <button class="p-button p-button-success action-btn" (click)="addUser(environment.id)">
-                  <!-- <i class="pi pi-user-plus"> Vincular</i> -->
                   <i class="pi pi-user-plus"></i>
                 </button>
                 <button class="p-button p-button-warning action-btn" (click)="editEnvironment(environment.id)">
-                  <!-- <i class="pi pi-pencil"> Editar</i> -->
                   <i class="pi pi-pencil"></i>
                 </button>
               </div>
-            </td>
+            </td> -->
           </tr>
         </ng-template>
       </p-table>
@@ -65,7 +76,8 @@
             <div style="display: inline-flex; width: 100%;">
               <div class="field" style="width: 50%; padding-right: 20px;">
                 <label for="startPeriod">Inicio do vínculo</label>
-                <p-calendar [(ngModel)]="startPeriod" required id="startPeriod" [ngClass]="{'ng-invalid ng-dirty' : requiredField(addFrequenterModel.startPeriod)}"></p-calendar>
+                <p-calendar [(ngModel)]="startPeriod" required id="startPeriod"
+                  [ngClass]="{'ng-invalid ng-dirty' : requiredField(addFrequenterModel.startPeriod)}"></p-calendar>
                 <small class="ng-dirty ng-invalid" *ngIf="requiredField(addFrequenterModel.startPeriod)">Inicio do periodo de acesso é obrigatório.</small>
               </div>
               <div class="field" style="width: 50%; padding-right: 20px;">

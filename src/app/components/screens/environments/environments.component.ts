@@ -77,6 +77,8 @@ export class EnvironmentsComponent implements OnInit {
 
   filter: EnvironmentsFilter;
 
+  pt: any;
+
   constructor(
     private environmentService: EnvironmentsService,
     private userService: UsersService,
@@ -147,6 +149,17 @@ export class EnvironmentsComponent implements OnInit {
     this.selectedTimeAccess.push({
       dias: "Sem horários selecionados"
     })
+
+    this.pt = {
+      firstDayOfWeek: 0,
+      dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+      dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+      dayNamesMin: ["D", "S", "T", "Q", "Q", "S", "S"],
+      monthNames: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"],
+      monthNamesShort: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"],
+      today: 'Hoje',
+      clear: 'Limpar'
+    };
   }
 
   requiredField(field: any): boolean {
@@ -412,6 +425,8 @@ export class EnvironmentsComponent implements OnInit {
   }
 
   private async addFrequenter(): Promise<any> {
+    // console.log(this.addFrequenterModel);
+
     return new Promise((resolve) => {
       this.environmentService.createAddFrequenter(this.addFrequenterModel).subscribe({
         next: (response: any) => {
